@@ -7,6 +7,7 @@ import { BasicStrategy, JwtStrategy, LocalStrategy } from './strategies';
 
 import { JWT_CONFIG } from '../constants';
 import { UsersModule } from '../users/users.module';
+import { DatabaseModule } from 'src/database/database.module';
 
 const { secret, expiresIn } = JWT_CONFIG;
 
@@ -15,13 +16,9 @@ const { secret, expiresIn } = JWT_CONFIG;
     UsersModule,
     PassportModule, //.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({ secret, signOptions: { expiresIn } }),
+    DatabaseModule,
   ],
-  providers: [
-    AuthService,
-    JwtStrategy,
-    LocalStrategy,
-    BasicStrategy,
-  ],
-  exports: [ AuthService ],
+  providers: [AuthService, JwtStrategy, LocalStrategy, BasicStrategy],
+  exports: [AuthService],
 })
 export class AuthModule {}
